@@ -1,54 +1,80 @@
-# RetailStream: End-to-End Data Engineering Pipeline
+# RetailStream: Kafka + dbt + DuckDB Data Engineering Pipeline
 
-## Overview
-RetailStream is an end-to-end data engineering project that demonstrates both batch and streaming data pipelines on retail marketplace data. The project uses the Olist e-commerce dataset and models operational data such as orders, customers, products, sellers, payments, and reviews.
+## Executive Summary
+RetailStream is an end-to-end data engineering project built around a retail marketplace use case using the Olist e-commerce dataset. The business scenario is straightforward: a retail company has raw operational marketplace data and needs trusted, analytics-ready tables to answer questions about revenue, product performance, customer retention, and seller operations.
 
-The platform combines:
-- DuckDB as the analytical warehouse
-- Kafka for streaming event ingestion
-- Python for ETL and orchestration
-- SQL-based transformations across a Medallion architecture
+This project turns raw source data into a structured DuckDB warehouse through batch ingestion, Kafka-based streaming ingestion, dbt transformations, testing, and reporting marts. The result is a reproducible data pipeline that supports downstream analytics without requiring analysts to work directly with raw source files.
 
-The pipeline is designed to move data from raw source files into Bronze, Silver, and Gold layers, then surface business-ready KPI outputs for analysis.
+## Why This Project Matters
+- It separates raw, cleaned, modeled, and business-facing layers so analytics can be built on trusted data.
+- It supports reporting and KPI analysis without exposing raw operational data directly to end users.
+- It demonstrates both batch ingestion and streaming ingestion in the same project.
+- It shows practical use of dbt models, dbt tests, and Python-based data quality checks in a warehouse workflow.
 
-## Architecture
-### Batch Pipeline
-Raw -> Bronze -> Silver -> Gold -> KPIs
+## Architecture Overview
+RetailStream combines batch ingestion, streaming ingestion, warehouse modeling, and reporting in a single pipeline.
 
-- Raw: source CSV files stored in `data/raw/`
-- Bronze: raw ingestion tables in DuckDB
-- Silver: cleaned and standardized tables for analytics
-- Gold: star-schema style dimensions and facts
-- KPIs: business queries for revenue, orders, products, and geography
+```text
+Olist CSVs -> Python Batch Loader -> Bronze Tables in DuckDB
+Olist CSVs -> Kafka Producer -> Kafka Topic -> Kafka Consumer -> Bronze Tables
+Bronze -> dbt Staging/Silver -> dbt Gold Dim/Fact Models -> dbt Reporting Marts -> KPI Analysis
+```
 
-### Streaming Pipeline
-Producer -> Kafka -> Consumer -> Bronze
+See [docs/architecture.md](docs/architecture.md) for the full architecture diagram and layer overview.
 
-- A Python producer reads source order records and publishes them to Kafka
-- Kafka buffers and distributes streaming order events
-- A Python consumer reads those events and inserts them into the Bronze layer
+## Dataset
+The project uses the **Olist eCommerce dataset**, a public retail marketplace dataset containing order, customer, product, seller, payment, and review data.
+
+Core source files used in this project:
+- orders
+- order_items
+- customers
+- products
+- sellers
+- payments
+- reviews
+
+These files are ingested from the raw dataset into Bronze tables in DuckDB and then transformed through dbt into analytics-ready models.
 
 ## Tech Stack
 - Python
 - DuckDB
 - Apache Kafka
 - Docker
+- dbt Core
 - SQL
 
-## Data Pipeline Steps
-1. Data ingestion
-   Raw retail CSV files are ingested directly into DuckDB, and Kafka-based streaming ingestion is supported for order events.
-2. Bronze layer
-   Raw source records are loaded into Bronze tables with minimal processing to preserve source structure.
-3. Silver layer
-   Bronze tables are cleaned, deduplicated, standardized, and typed for downstream use.
-4. Gold layer
-   Silver tables are modeled into a star schema with dimension and fact tables.
-5. KPI analysis
-   Business queries are run on the Gold layer to measure revenue, order activity, product performance, and regional demand.
+## Repository Structure
+- `bronze/`
+  Contains Bronze-layer table creation logic for DuckDB.
+- `ingestion/`
+  Contains the batch loader and Kafka producer/consumer scripts used for ingestion.
+- `pipeline/`
+  Contains orchestration and KPI analysis logic, including the main pipeline runner.
+- `dbt_retailstream/`
+  Contains the dbt project, including staging models, dimensional models, fact models, reporting marts, and schema tests.
+- `quality/`
+  Contains Python-based warehouse quality checks and the generated quality report.
+- `docs/`
+  Contains architecture and data dictionary documentation.
+- `data/`
+  Contains raw source files and the DuckDB warehouse file.
 
-## Tables Created
+## Pipeline Layers
 ### Bronze
+The Bronze layer stores raw, source-preserving data in DuckDB. It is designed to keep the source structure recognizable while making the data queryable in the warehouse.
+
+### Staging/Silver
+The Staging/Silver layer is implemented with dbt staging models. This layer applies filtering, deduplication, safe casting, null handling, and standardization so the data is ready for dimensional modeling.
+
+### Gold
+The Gold layer implements a star schema with dimension tables and a central fact table. This layer is designed for consistent joins, KPI analysis, and downstream reporting.
+
+### Reporting Marts
+The reporting marts are business-ready aggregate tables built on top of the Gold layer. They simplify recurring analysis for sales, product performance, customer retention, and seller operations.
+
+## Tables and Models
+### Bronze tables
 - `bronze_orders`
 - `bronze_order_items`
 - `bronze_customers`
@@ -58,103 +84,95 @@ Producer -> Kafka -> Consumer -> Bronze
 - `bronze_reviews`
 - `bronze_metadata`
 
-### Silver
-- `silver_orders`
-- `silver_order_items`
-- `silver_customers`
-- `silver_products`
-- `silver_sellers`
-- `silver_payments`
-- `silver_reviews`
+### dbt staging models
+- `stg_orders`
+- `stg_order_items`
+- `stg_customers`
+- `stg_products`
+- `stg_sellers`
+- `stg_payments`
+- `stg_reviews`
 
-### Gold
+### Gold models
 - `dim_customers`
 - `dim_products`
 - `dim_sellers`
 - `dim_date`
 - `fact_orders`
 
-## KPI Results
-Current KPI results from the project DuckDB warehouse:
+### Reporting marts
+- `mart_sales_daily`
+- `mart_product_performance`
+- `mart_customer_retention`
+- `mart_seller_performance`
 
-- Total Revenue: approximately `16.8M`
-- Average Order Value: approximately `158.04`
+## Data Quality and Testing
+RetailStream includes both dbt-native validation and Python-based warehouse quality checks.
+
+- `57` dbt tests passed
+- `10` Python quality checks passed
+- dbt coverage includes not-null, unique, accepted values, and relationships tests
+- Python validation writes a machine-readable report to `quality/quality_report.json`
+
+This combination helps validate both model-level assumptions and business-facing warehouse integrity.
+
+## Orchestration
+The main orchestration entry point is `pipeline/run_pipeline.py`.
+
+It runs the pipeline in this order:
+- create Bronze tables
+- load Bronze data
+- `dbt run`
+- `dbt test`
+- Python quality checks
+- KPI analysis
+
+The script stops immediately if any step fails, which makes the pipeline easier to validate and rerun consistently.
+
+## KPI Results
+Final pipeline outputs include:
+
+- Total Revenue: approximately `20.3M`
+- Average Order Value: approximately `180.28`
 - Top State by Orders: `SP`
-- Top Products by Revenue include:
-  - `bb50f2e236e5eea0100680137654686c`
-  - `6cdd53843498f92890544667809f1595`
-  - `d6160fb7873f184099d9bc95e30376af`
+- dbt run: `16 models completed`
+- dbt test: `57/57 passed`
+- quality checks: `10/10 passed`
 
 ## How to Run
-Run all commands from the project root:
+Run the full pipeline from the project root:
 
 ```powershell
-cd retailstream
 pip install -r requirements.txt
-```
-
-1. Create Bronze tables
-```powershell
-python bronze\create_bronze_tables.py
-```
-
-2. Load raw CSV data into Bronze
-```powershell
-python ingestion\load_to_bronze.py
-```
-
-3. Build Silver tables
-```powershell
-python pipeline\silver_transform.py
-```
-
-4. Build Gold tables
-```powershell
-python pipeline\gold_transform.py
-```
-
-5. Run KPI analysis
-```powershell
-python pipeline\kpi_analysis.py
-```
-
-6. Optional Kafka setup
-```powershell
 docker compose up -d
-python ingestion\producer.py
-python ingestion\consumer.py
+python pipeline/run_pipeline.py
 ```
+
+Optional dbt-only workflow:
+
+```powershell
+cd dbt_retailstream
+dbt run
+dbt test
+```
+
+Optional Kafka demo:
+
+```powershell
+python ingestion/producer.py
+python ingestion/consumer.py
+```
+
+## Documentation
+- [docs/data_dictionary.md](docs/data_dictionary.md)
+- [docs/architecture.md](docs/architecture.md)
 
 ## Key Learnings
-- Building both batch and streaming pipelines highlights the tradeoffs between scheduled warehouse loading and event-driven ingestion.
-- Real retail datasets require careful data cleaning for null values, duplicates, inconsistent text fields, and timestamp handling.
-- Star schema design improves analytical usability by separating descriptive dimensions from transactional facts.
+This project demonstrates:
 
-## Folder Structure
-```text
-retailstream/
-├── .gitignore
-├── data_inspection.py
-├── docker-compose.yml
-├── README.md
-├── requirements.txt
-├── bronze/
-│   └── create_bronze_tables.py
-├── ingestion/
-│   ├── consumer.py
-│   ├── load_to_bronze.py
-│   └── producer.py
-├── pipeline/
-│   ├── db_setup.py
-│   ├── gold_transform.py
-│   ├── kpi_analysis.py
-│   └── silver_transform.py
-├── data/
-│   ├── raw/
-│   └── sample/
-│   
-├── dashboard/
-├── docs/
-├── dbt_retailstream/
-└── quality/
-```
+- warehouse design using layered data modeling
+- dbt transformations for staging, dimensional models, and reporting marts
+- star schema modeling for analytics-ready warehouse design
+- Kafka-based streaming ingestion alongside batch ingestion
+- data validation through dbt tests and Python quality checks
+- reproducible orchestration through a single pipeline runner

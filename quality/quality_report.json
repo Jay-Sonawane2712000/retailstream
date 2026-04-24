@@ -1,0 +1,12 @@
+{
+  "bronze_orders_row_count_gt_0": "PASS",
+  "fact_orders_row_count_gt_0": "PASS",
+  "fact_orders_customer_id_no_nulls": "PASS",
+  "fact_orders_product_id_no_nulls": "PASS",
+  "fact_orders_total_revenue_no_nulls": "PASS",
+  "dim_customers_customer_id_unique": "PASS",
+  "dim_products_product_id_unique": "PASS",
+  "fact_orders_customer_id_in_dim_customers": "PASS",
+  "fact_orders_product_id_in_dim_products": "PASS",
+  "fact_orders_total_revenue_gte_0": "PASS"
+}

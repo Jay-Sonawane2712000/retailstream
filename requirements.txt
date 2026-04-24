@@ -2,3 +2,5 @@ pandas
 duckdb
 confluent-kafka
 python-dotenv
+dbt-core
+dbt-duckdb

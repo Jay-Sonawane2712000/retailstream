@@ -16,3 +16,12 @@ data/raw/
 *.db
 .env
 .ipynb_checkpoints/
+
+# dbt generated files
+dbt_retailstream/target/
+dbt_retailstream/dbt_packages/
+dbt_retailstream/logs/
+
+# logs
+logs/
+*.log

@@ -1,0 +1,14 @@
+version: 2
+
+sources:
+  - name: bronze
+    schema: main
+    tables:
+      - name: bronze_orders
+      - name: bronze_order_items
+      - name: bronze_customers
+      - name: bronze_products
+      - name: bronze_sellers
+      - name: bronze_payments
+      - name: bronze_reviews
+      - name: bronze_metadata

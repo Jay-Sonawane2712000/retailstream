@@ -34,14 +34,18 @@ def main() -> None:
             "2. Orders per Month",
             """
             SELECT
-                d.year,
-                d.month,
+                EXTRACT(YEAR FROM d.full_date) AS year,
+                EXTRACT(MONTH FROM d.full_date) AS month,
                 COUNT(DISTINCT f.order_id) AS orders_count
             FROM fact_orders AS f
             INNER JOIN dim_date AS d
-                ON f.order_purchase_timestamp = d.order_purchase_timestamp
-            GROUP BY d.year, d.month
-            ORDER BY d.year, d.month
+                ON f.date_id = d.date_id
+            GROUP BY
+                EXTRACT(YEAR FROM d.full_date),
+                EXTRACT(MONTH FROM d.full_date)
+            ORDER BY
+                EXTRACT(YEAR FROM d.full_date),
+                EXTRACT(MONTH FROM d.full_date)
             """,
         )
 
@@ -51,7 +55,7 @@ def main() -> None:
             """
             SELECT
                 product_id,
-                SUM(price) AS total_product_revenue
+                SUM(total_revenue) AS total_product_revenue
             FROM fact_orders
             GROUP BY product_id
             ORDER BY total_product_revenue DESC

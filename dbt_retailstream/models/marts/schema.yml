@@ -1,0 +1,131 @@
+version: 2
+
+models:
+  - name: dim_customers
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+      - name: customer_unique_id
+        tests:
+          - not_null
+
+  - name: dim_products
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_sellers
+    columns:
+      - name: seller_id
+        tests:
+          - not_null
+          - unique
+
+  - name: dim_date
+    columns:
+      - name: date_id
+        tests:
+          - not_null
+          - unique
+      - name: full_date
+        tests:
+          - not_null
+
+  - name: fact_orders
+    columns:
+      - name: order_id
+        tests:
+          - not_null
+      - name: order_item_id
+        tests:
+          - not_null
+      - name: customer_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_customers')
+                field: customer_id
+      - name: product_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_products')
+                field: product_id
+      - name: seller_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_sellers')
+                field: seller_id
+      - name: date_id
+        tests:
+          - not_null
+          - relationships:
+              arguments:
+                to: ref('dim_date')
+                field: date_id
+      - name: unit_price
+        tests:
+          - not_null
+      - name: total_revenue
+        tests:
+          - not_null
+
+  - name: mart_sales_daily
+    columns:
+      - name: date_id
+        tests:
+          - not_null
+          - unique
+      - name: total_orders
+        tests:
+          - not_null
+      - name: total_revenue
+        tests:
+          - not_null
+
+  - name: mart_product_performance
+    columns:
+      - name: product_id
+        tests:
+          - not_null
+          - unique
+      - name: total_orders
+        tests:
+          - not_null
+      - name: total_revenue
+        tests:
+          - not_null
+
+  - name: mart_customer_retention
+    columns:
+      - name: customer_id
+        tests:
+          - not_null
+          - unique
+      - name: total_orders
+        tests:
+          - not_null
+      - name: repeat_customer_flag
+        tests:
+          - not_null
+
+  - name: mart_seller_performance
+    columns:
+      - name: seller_id
+        tests:
+          - not_null
+          - unique
+      - name: total_orders
+        tests:
+          - not_null
+      - name: total_revenue
+        tests:
+          - not_null
