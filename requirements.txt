@@ -1,0 +1,4 @@
+pandas
+duckdb
+confluent-kafka
+python-dotenv
