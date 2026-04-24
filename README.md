@@ -14,6 +14,8 @@ This project turns raw source data into a structured DuckDB warehouse through ba
 ## Architecture Overview
 RetailStream combines batch ingestion, streaming ingestion, warehouse modeling, and reporting in a single pipeline.
 
+![RetailStream Architecture](docs/architecture.png)
+
 ```text
 Olist CSVs -> Python Batch Loader -> Bronze Tables in DuckDB
 Olist CSVs -> Kafka Producer -> Kafka Topic -> Kafka Consumer -> Bronze Tables
