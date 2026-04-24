@@ -1,0 +1,279 @@
+Bronze tables created successfully in: data\retailstream.duckdb
+DuckDB connection closed.
+Loaded bronze_orders: 99441 rows
+Loaded bronze_order_items: 112650 rows
+Loaded bronze_customers: 99441 rows
+Loaded bronze_products: 32951 rows
+Loaded bronze_sellers: 3095 rows
+Loaded bronze_payments: 103886 rows
+Loaded bronze_reviews: 99224 rows
+DuckDB connection closed.
+21:43:24  Running with dbt=1.11.8
+21:43:24  Registered adapter: duckdb=1.10.1
+21:43:25  Found 16 models, 57 data tests, 8 sources, 475 macros
+21:43:25  
+21:43:25  Concurrency: 1 threads (target='dev')
+21:43:25  
+21:43:26  1 of 16 START sql view model main.stg_customers ................................ [RUN]
+21:43:26  1 of 16 OK created sql view model main.stg_customers ........................... [OK in 0.13s]
+21:43:26  2 of 16 START sql view model main.stg_order_items .............................. [RUN]
+21:43:26  2 of 16 OK created sql view model main.stg_order_items ......................... [OK in 0.11s]
+21:43:26  3 of 16 START sql view model main.stg_orders ................................... [RUN]
+21:43:26  3 of 16 OK created sql view model main.stg_orders .............................. [OK in 0.05s]
+21:43:26  4 of 16 START sql view model main.stg_payments ................................. [RUN]
+21:43:26  4 of 16 OK created sql view model main.stg_payments ............................ [OK in 0.04s]
+21:43:26  5 of 16 START sql view model main.stg_products ................................. [RUN]
+21:43:27  5 of 16 OK created sql view model main.stg_products ............................ [OK in 0.05s]
+21:43:27  6 of 16 START sql view model main.stg_reviews .................................. [RUN]
+21:43:27  6 of 16 OK created sql view model main.stg_reviews ............................. [OK in 0.05s]
+21:43:27  7 of 16 START sql view model main.stg_sellers .................................. [RUN]
+21:43:27  7 of 16 OK created sql view model main.stg_sellers ............................. [OK in 0.05s]
+21:43:27  8 of 16 START sql table model main.dim_customers ............................... [RUN]
+21:43:27  8 of 16 OK created sql table model main.dim_customers .......................... [OK in 0.26s]
+21:43:27  9 of 16 START sql table model main.dim_date .................................... [RUN]
+21:43:27  9 of 16 OK created sql table model main.dim_date ............................... [OK in 0.10s]
+21:43:27  10 of 16 START sql table model main.dim_products ............................... [RUN]
+21:43:27  10 of 16 OK created sql table model main.dim_products .......................... [OK in 0.13s]
+21:43:27  11 of 16 START sql table model main.dim_sellers ................................ [RUN]
+21:43:27  11 of 16 OK created sql table model main.dim_sellers ........................... [OK in 0.15s]
+21:43:27  12 of 16 START sql table model main.fact_orders ................................ [RUN]
+21:43:28  12 of 16 OK created sql table model main.fact_orders ........................... [OK in 1.12s]
+21:43:28  13 of 16 START sql table model main.mart_customer_retention .................... [RUN]
+21:43:29  13 of 16 OK created sql table model main.mart_customer_retention ............... [OK in 0.38s]
+21:43:29  14 of 16 START sql table model main.mart_product_performance ................... [RUN]
+21:43:29  14 of 16 OK created sql table model main.mart_product_performance .............. [OK in 0.32s]
+21:43:29  15 of 16 START sql table model main.mart_sales_daily ........................... [RUN]
+21:43:29  15 of 16 OK created sql table model main.mart_sales_daily ...................... [OK in 0.16s]
+21:43:29  16 of 16 START sql table model main.mart_seller_performance .................... [RUN]
+21:43:30  16 of 16 OK created sql table model main.mart_seller_performance ............... [OK in 0.23s]
+21:43:30  
+21:43:30  Finished running 9 table models, 7 view models in 0 hours 0 minutes and 4.12 seconds (4.12s).
+21:43:30  
+21:43:30  Completed successfully
+21:43:30  
+21:43:30  Done. PASS=16 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=16
+21:43:36  Running with dbt=1.11.8
+21:43:37  Registered adapter: duckdb=1.10.1
+21:43:39  Found 16 models, 57 data tests, 8 sources, 475 macros
+21:43:39  
+21:43:39  Concurrency: 1 threads (target='dev')
+21:43:39  
+21:43:39  1 of 57 START test accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved  [RUN]
+21:43:39  1 of 57 PASS accepted_values_stg_orders_order_status__delivered__shipped__canceled__unavailable__invoiced__processing__created__approved  [PASS in 0.13s]
+21:43:39  2 of 57 START test accepted_values_stg_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined  [RUN]
+21:43:39  2 of 57 PASS accepted_values_stg_payments_payment_type__credit_card__boleto__voucher__debit_card__not_defined  [PASS in 0.03s]
+21:43:39  3 of 57 START test not_null_dim_customers_customer_id .......................... [RUN]
+21:43:39  3 of 57 PASS not_null_dim_customers_customer_id ................................ [PASS in 0.03s]
+21:43:39  4 of 57 START test not_null_dim_customers_customer_unique_id ................... [RUN]
+21:43:39  4 of 57 PASS not_null_dim_customers_customer_unique_id ......................... [PASS in 0.02s]
+21:43:39  5 of 57 START test not_null_dim_date_date_id ................................... [RUN]
+21:43:39  5 of 57 PASS not_null_dim_date_date_id ......................................... [PASS in 0.02s]
+21:43:39  6 of 57 START test not_null_dim_date_full_date ................................. [RUN]
+21:43:39  6 of 57 PASS not_null_dim_date_full_date ....................................... [PASS in 0.03s]
+21:43:39  7 of 57 START test not_null_dim_products_product_id ............................ [RUN]
+21:43:39  7 of 57 PASS not_null_dim_products_product_id .................................. [PASS in 0.02s]
+21:43:39  8 of 57 START test not_null_dim_sellers_seller_id .............................. [RUN]
+21:43:39  8 of 57 PASS not_null_dim_sellers_seller_id .................................... [PASS in 0.02s]
+21:43:39  9 of 57 START test not_null_fact_orders_customer_id ............................ [RUN]
+21:43:39  9 of 57 PASS not_null_fact_orders_customer_id .................................. [PASS in 0.02s]
+21:43:39  10 of 57 START test not_null_fact_orders_date_id ............................... [RUN]
+21:43:39  10 of 57 PASS not_null_fact_orders_date_id ..................................... [PASS in 0.03s]
+21:43:39  11 of 57 START test not_null_fact_orders_order_id .............................. [RUN]
+21:43:40  11 of 57 PASS not_null_fact_orders_order_id .................................... [PASS in 0.02s]
+21:43:40  12 of 57 START test not_null_fact_orders_order_item_id ......................... [RUN]
+21:43:40  12 of 57 PASS not_null_fact_orders_order_item_id ............................... [PASS in 0.03s]
+21:43:40  13 of 57 START test not_null_fact_orders_product_id ............................ [RUN]
+21:43:40  13 of 57 PASS not_null_fact_orders_product_id .................................. [PASS in 0.02s]
+21:43:40  14 of 57 START test not_null_fact_orders_seller_id ............................. [RUN]
+21:43:40  14 of 57 PASS not_null_fact_orders_seller_id ................................... [PASS in 0.02s]
+21:43:40  15 of 57 START test not_null_fact_orders_total_revenue ......................... [RUN]
+21:43:40  15 of 57 PASS not_null_fact_orders_total_revenue ............................... [PASS in 0.03s]
+21:43:40  16 of 57 START test not_null_fact_orders_unit_price ............................ [RUN]
+21:43:40  16 of 57 PASS not_null_fact_orders_unit_price .................................. [PASS in 0.02s]
+21:43:40  17 of 57 START test not_null_mart_customer_retention_customer_id ............... [RUN]
+21:43:40  17 of 57 PASS not_null_mart_customer_retention_customer_id ..................... [PASS in 0.03s]
+21:43:40  18 of 57 START test not_null_mart_customer_retention_repeat_customer_flag ...... [RUN]
+21:43:40  18 of 57 PASS not_null_mart_customer_retention_repeat_customer_flag ............ [PASS in 0.03s]
+21:43:40  19 of 57 START test not_null_mart_customer_retention_total_orders .............. [RUN]
+21:43:40  19 of 57 PASS not_null_mart_customer_retention_total_orders .................... [PASS in 0.02s]
+21:43:40  20 of 57 START test not_null_mart_product_performance_product_id ............... [RUN]
+21:43:40  20 of 57 PASS not_null_mart_product_performance_product_id ..................... [PASS in 0.02s]
+21:43:40  21 of 57 START test not_null_mart_product_performance_total_orders ............. [RUN]
+21:43:40  21 of 57 PASS not_null_mart_product_performance_total_orders ................... [PASS in 0.02s]
+21:43:40  22 of 57 START test not_null_mart_product_performance_total_revenue ............ [RUN]
+21:43:40  22 of 57 PASS not_null_mart_product_performance_total_revenue .................. [PASS in 0.03s]
+21:43:40  23 of 57 START test not_null_mart_sales_daily_date_id .......................... [RUN]
+21:43:40  23 of 57 PASS not_null_mart_sales_daily_date_id ................................ [PASS in 0.02s]
+21:43:40  24 of 57 START test not_null_mart_sales_daily_total_orders ..................... [RUN]
+21:43:40  24 of 57 PASS not_null_mart_sales_daily_total_orders ........................... [PASS in 0.03s]
+21:43:40  25 of 57 START test not_null_mart_sales_daily_total_revenue .................... [RUN]
+21:43:40  25 of 57 PASS not_null_mart_sales_daily_total_revenue .......................... [PASS in 0.03s]
+21:43:40  26 of 57 START test not_null_mart_seller_performance_seller_id ................. [RUN]
+21:43:40  26 of 57 PASS not_null_mart_seller_performance_seller_id ....................... [PASS in 0.02s]
+21:43:40  27 of 57 START test not_null_mart_seller_performance_total_orders .............. [RUN]
+21:43:40  27 of 57 PASS not_null_mart_seller_performance_total_orders .................... [PASS in 0.02s]
+21:43:40  28 of 57 START test not_null_mart_seller_performance_total_revenue ............. [RUN]
+21:43:40  28 of 57 PASS not_null_mart_seller_performance_total_revenue ................... [PASS in 0.02s]
+21:43:40  29 of 57 START test not_null_stg_customers_customer_id ......................... [RUN]
+21:43:40  29 of 57 PASS not_null_stg_customers_customer_id ............................... [PASS in 0.04s]
+21:43:40  30 of 57 START test not_null_stg_customers_customer_unique_id .................. [RUN]
+21:43:40  30 of 57 PASS not_null_stg_customers_customer_unique_id ........................ [PASS in 0.03s]
+21:43:40  31 of 57 START test not_null_stg_order_items_order_id .......................... [RUN]
+21:43:40  31 of 57 PASS not_null_stg_order_items_order_id ................................ [PASS in 0.04s]
+21:43:40  32 of 57 START test not_null_stg_order_items_product_id ........................ [RUN]
+21:43:40  32 of 57 PASS not_null_stg_order_items_product_id .............................. [PASS in 0.04s]
+21:43:40  33 of 57 START test not_null_stg_order_items_seller_id ......................... [RUN]
+21:43:40  33 of 57 PASS not_null_stg_order_items_seller_id ............................... [PASS in 0.04s]
+21:43:40  34 of 57 START test not_null_stg_orders_customer_id ............................ [RUN]
+21:43:40  34 of 57 PASS not_null_stg_orders_customer_id .................................. [PASS in 0.03s]
+21:43:40  35 of 57 START test not_null_stg_orders_order_id ............................... [RUN]
+21:43:40  35 of 57 PASS not_null_stg_orders_order_id ..................................... [PASS in 0.03s]
+21:43:40  36 of 57 START test not_null_stg_payments_order_id ............................. [RUN]
+21:43:40  36 of 57 PASS not_null_stg_payments_order_id ................................... [PASS in 0.03s]
+21:43:40  37 of 57 START test not_null_stg_products_product_id ........................... [RUN]
+21:43:40  37 of 57 PASS not_null_stg_products_product_id ................................. [PASS in 0.03s]
+21:43:40  38 of 57 START test not_null_stg_reviews_order_id .............................. [RUN]
+21:43:40  38 of 57 PASS not_null_stg_reviews_order_id .................................... [PASS in 0.02s]
+21:43:40  39 of 57 START test not_null_stg_reviews_review_id ............................. [RUN]
+21:43:40  39 of 57 PASS not_null_stg_reviews_review_id ................................... [PASS in 0.03s]
+21:43:40  40 of 57 START test not_null_stg_sellers_seller_id ............................. [RUN]
+21:43:40  40 of 57 PASS not_null_stg_sellers_seller_id ................................... [PASS in 0.03s]
+21:43:40  41 of 57 START test relationships_fact_orders_customer_id__customer_id__ref_dim_customers_  [RUN]
+21:43:41  41 of 57 PASS relationships_fact_orders_customer_id__customer_id__ref_dim_customers_  [PASS in 0.12s]
+21:43:41  42 of 57 START test relationships_fact_orders_date_id__date_id__ref_dim_date_ .. [RUN]
+21:43:41  42 of 57 PASS relationships_fact_orders_date_id__date_id__ref_dim_date_ ........ [PASS in 0.03s]
+21:43:41  43 of 57 START test relationships_fact_orders_product_id__product_id__ref_dim_products_  [RUN]
+21:43:41  43 of 57 PASS relationships_fact_orders_product_id__product_id__ref_dim_products_  [PASS in 0.06s]
+21:43:41  44 of 57 START test relationships_fact_orders_seller_id__seller_id__ref_dim_sellers_  [RUN]
+21:43:41  44 of 57 PASS relationships_fact_orders_seller_id__seller_id__ref_dim_sellers_ . [PASS in 0.04s]
+21:43:41  45 of 57 START test unique_dim_customers_customer_id ........................... [RUN]
+21:43:41  45 of 57 PASS unique_dim_customers_customer_id ................................. [PASS in 0.06s]
+21:43:41  46 of 57 START test unique_dim_date_date_id .................................... [RUN]
+21:43:41  46 of 57 PASS unique_dim_date_date_id .......................................... [PASS in 0.03s]
+21:43:41  47 of 57 START test unique_dim_products_product_id ............................. [RUN]
+21:43:41  47 of 57 PASS unique_dim_products_product_id ................................... [PASS in 0.03s]
+21:43:41  48 of 57 START test unique_dim_sellers_seller_id ............................... [RUN]
+21:43:41  48 of 57 PASS unique_dim_sellers_seller_id ..................................... [PASS in 0.03s]
+21:43:41  49 of 57 START test unique_mart_customer_retention_customer_id ................. [RUN]
+21:43:41  49 of 57 PASS unique_mart_customer_retention_customer_id ....................... [PASS in 0.06s]
+21:43:41  50 of 57 START test unique_mart_product_performance_product_id ................. [RUN]
+21:43:41  50 of 57 PASS unique_mart_product_performance_product_id ....................... [PASS in 0.03s]
+21:43:41  51 of 57 START test unique_mart_sales_daily_date_id ............................ [RUN]
+21:43:41  51 of 57 PASS unique_mart_sales_daily_date_id .................................. [PASS in 0.02s]
+21:43:41  52 of 57 START test unique_mart_seller_performance_seller_id ................... [RUN]
+21:43:41  52 of 57 PASS unique_mart_seller_performance_seller_id ......................... [PASS in 0.03s]
+21:43:41  53 of 57 START test unique_stg_customers_customer_id ........................... [RUN]
+21:43:41  53 of 57 PASS unique_stg_customers_customer_id ................................. [PASS in 0.10s]
+21:43:41  54 of 57 START test unique_stg_orders_order_id ................................. [RUN]
+21:43:41  54 of 57 PASS unique_stg_orders_order_id ....................................... [PASS in 0.06s]
+21:43:41  55 of 57 START test unique_stg_products_product_id ............................. [RUN]
+21:43:41  55 of 57 PASS unique_stg_products_product_id ................................... [PASS in 0.08s]
+21:43:41  56 of 57 START test unique_stg_reviews_review_id ............................... [RUN]
+21:43:41  56 of 57 PASS unique_stg_reviews_review_id ..................................... [PASS in 0.12s]
+21:43:41  57 of 57 START test unique_stg_sellers_seller_id ............................... [RUN]
+21:43:41  57 of 57 PASS unique_stg_sellers_seller_id ..................................... [PASS in 0.05s]
+21:43:41  
+21:43:41  Finished running 57 data tests in 0 hours 0 minutes and 2.87 seconds (2.87s).
+21:43:42  
+21:43:42  Completed successfully
+21:43:42  
+21:43:42  Done. PASS=57 WARN=0 ERROR=0 SKIP=0 NO-OP=0 TOTAL=57
+TOTAL CHECKS: 10
+PASSED: 10
+FAILED: 0
+================================================================================
+1. Total Revenue
+================================================================================
+ total_revenue
+   20308134.71
+
+================================================================================
+2. Orders per Month
+================================================================================
+ year  month  orders_count
+ 2016      9             3
+ 2016     10           308
+ 2016     12             1
+ 2017      1           789
+ 2017      2          1733
+ 2017      3          2641
+ 2017      4          2391
+ 2017      5          3660
+ 2017      6          3217
+ 2017      7          3969
+ 2017      8          4293
+ 2017      9          4243
+ 2017     10          4568
+ 2017     11          7451
+ 2017     12          5624
+ 2018      1          7220
+ 2018      2          6694
+ 2018      3          7188
+ 2018      4          6934
+ 2018      5          6853
+ 2018      6          6160
+ 2018      7          6273
+ 2018      8          6452
+ 2018      9             1
+
+================================================================================
+3. Top 10 Products by Revenue
+================================================================================
+                      product_id  total_product_revenue
+bb50f2e236e5eea0100680137654686c               67606.10
+d1c427060a0f73f6b889a5c7c61f2ac4               60976.03
+6cdd53843498f92890544667809f1595               59093.99
+99a4788cb24856965c36a24e339b6058               51071.60
+d6160fb7873f184099d9bc95e30376af               50326.18
+3dd2a17168ec895c781a9191c1e95ad7               48212.22
+aca2eb7d00ea1a7b8ebd4e68314663af               44820.76
+5f504b3a1c75b73d6151be81eb05bdc9               41725.81
+25c38557cf793876c5abdd5931f922db               40311.95
+53b36df67ebb7c41585e8d54d6772e08               39957.93
+
+================================================================================
+4. Top States by Orders
+================================================================================
+customer_state  orders_count
+            SP         41375
+            RJ         12762
+            MG         11544
+            RS          5432
+            PR          4998
+            SC          3612
+            BA          3358
+            DF          2125
+            ES          2025
+            GO          2007
+            PE          1648
+            CE          1327
+            PA           970
+            MT           903
+            MA           740
+            MS           709
+            PB           532
+            PI           493
+            RN           482
+            AL           411
+            SE           345
+            TO           279
+            RO           247
+            AM           147
+            AC            81
+            AP            68
+            RR            46
+
+================================================================================
+5. Average Order Value
+================================================================================
+ average_order_value
+          180.281186
+
+DuckDB connection closed.
+Running: create_bronze_tables
+Running: load_to_bronze
+Running: dbt_run
+Running: dbt_test
+Running: quality_checks
+Running: kpi_analysis
+PIPELINE COMPLETED SUCCESSFULLY
