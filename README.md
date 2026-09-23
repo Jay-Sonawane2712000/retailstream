@@ -25,7 +25,7 @@ Bronze -> dbt Staging/Silver -> dbt Gold Dim/Fact Models -> dbt Reporting Marts 
 See [docs/architecture.md](docs/architecture.md) for the full architecture diagram and layer overview.
 
 ## Dataset
-The project uses the **Olist eCommerce dataset**, a public retail marketplace dataset containing order, customer, product, seller, payment, and review data.
+The project uses the **Olist e-commerce dataset**, a public retail marketplace dataset containing order, customer, product, seller, payment, and review data.
 
 Core source files used in this project:
 - orders
