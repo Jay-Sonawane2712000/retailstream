@@ -121,7 +121,7 @@ This combination helps validate both model-level assumptions and business-facing
 ## Orchestration
 The main orchestration entry point is `pipeline/run_pipeline.py`.
 
-It runs the pipeline in this order:
+The runner executes the pipeline in this order:
 - create Bronze tables
 - load Bronze data
 - `dbt run`
