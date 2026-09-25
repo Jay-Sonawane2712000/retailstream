@@ -22,7 +22,7 @@ Olist CSVs -> Kafka Producer -> Kafka Topic -> Kafka Consumer -> Bronze Tables
 Bronze -> dbt Staging/Silver -> dbt Gold Dim/Fact Models -> dbt Reporting Marts -> KPI Analysis
 ```
 
-See [docs/architecture.md](docs/architecture.md) for the full architecture diagram and layer overview.
+See [docs/architecture.md](docs/architecture.md) for the full architecture diagram and layer-by-layer overview.
 
 ## Dataset
 The project uses the **Olist e-commerce dataset**, a public retail marketplace dataset containing order, customer, product, seller, payment, and review data.
