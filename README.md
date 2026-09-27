@@ -165,6 +165,8 @@ python ingestion/producer.py
 python ingestion/consumer.py
 ```
 
+Run the producer and consumer in separate terminals so the consumer can process events while the producer is active.
+
 ## Documentation
 - [docs/data_dictionary.md](docs/data_dictionary.md)
 - [docs/architecture.md](docs/architecture.md)
