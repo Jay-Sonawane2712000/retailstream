@@ -1,6 +1,6 @@
 # RetailStream Architecture
 
-RetailStream combines batch ingestion, streaming ingestion, dbt-based transformation, and KPI analysis in a single end-to-end retail data pipeline.
+RetailStream combines batch ingestion, streaming ingestion, dbt-based transformation, and KPI analysis in a single end-to-end retail data pipeline. The batch and streaming paths converge in the Bronze layer before downstream dbt modeling.
 
 ## Pipeline Diagram
 ```mermaid
